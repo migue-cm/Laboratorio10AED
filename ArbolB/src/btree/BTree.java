@@ -81,6 +81,7 @@ public class BTree<E extends Comparable<E>> {
 	    return sb.toString();
 	}
 
+	
 	private E push(BNode<E> current,E cl){
 		int pos[] = new int[1]; 
 		E mediana;
