@@ -31,6 +31,56 @@ public class BTree<E extends Comparable<E>> {
 		}
 	}
 	
+	//metodo toString
+	@Override
+	public String toString() {
+	    String s = "";
+	    if (isEmpty())
+	        s += "BTree is empty...";
+	    else
+	        s = writeTree(this.root);
+	    return s;
+	}
+
+	private String writeTree(BNode<E> current) {
+	    if (current == null) return "";
+
+	    StringBuilder sb = new StringBuilder();
+
+	    sb.append("Id.Nodo: ").append(current.idNode).append("\n");
+	    sb.append("Claves Nodo: (");
+	    for (int i = 0; i < current.count; i++) {
+	        sb.append(current.keys.get(i));
+	        if (i < current.count - 1)
+	            sb.append(", ");
+	    }
+	    sb.append(")\n");
+
+	    sb.append("Id.Hijos: [");
+	    boolean hayHijos = false;
+	    for (int i = 0; i <= current.count; i++) {
+	        BNode<E> child = current.childs.get(i);
+	        if (child != null) {
+	            sb.append(child.idNode);
+	            if (i < current.count && current.childs.get(i + 1) != null)
+	                sb.append(", ");
+	            hayHijos = true;
+	        }
+	    }
+	    if (!hayHijos) sb.append("--");
+	    sb.append("]\n\n");
+
+	    // Recursivamente escribir los hijos
+	    for (int i = 0; i <= current.count; i++) {
+	        BNode<E> child = current.childs.get(i);
+	        if (child != null) {
+	            sb.append(writeTree(child));
+	        }
+	    }
+
+	    return sb.toString();
+	}
+
 	private E push(BNode<E> current,E cl){
 		int pos[] = new int[1]; 
 		E mediana;
